@@ -1,4 +1,4 @@
-select count(*) as cnt, e.entryId, CUM_GPA,
+select count(*) as cnt, e.entryId, CUM_GPA,log(cum_GPA),
 convert(decimal(9,2),(select sum(UNIT_TERM_TOT) from NYUEnrollment neGPA WHERE neGPA.EmplID = ne.EmplID))/(select count(*) from NYUEnrollment neGPA2 WHERE neGPA2.EmplID = ne.EmplID and UNIT_TERM_TOT <> 0) as AvgCredits,
 case 
 	when ge.Abbreviation = 'F' then 1
