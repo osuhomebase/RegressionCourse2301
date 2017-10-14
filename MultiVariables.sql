@@ -4,20 +4,18 @@ case
 	when ge.Abbreviation = 'F' then 1
 	else 0
 end as gender,
-ep.ProfileWeightEnum,
-ea.Street, ea.City, ea.StateProvince, ea.ZipPostcode,
-ea.CountryID
+ep.ProfileWeightEnum, ea.City, ea.StateProvince, c.Description as country
  
  from programEntry pe INNER JOIN entry e on pe.entryId = e.entryId 
 INNER JOIN Program p on pe.ProgramID = p.ProgramId 
 INNER JOIN NYUEnrollment ne on e.id3 = ne.EmplID
 INNER JOIN GenderEnum ge ON e.Birth_GenderEnum = ge.GenderEnum
-INNER JOIN EntryProfile ep on e.entryID = ep.entryID AND ProfileItemID = 503
+INNER JOIN EntryProfile ep on e.entryID = ep.entryID AND ProfileItemID = 501
 INNER JOIN EntryAddress ea on e.entryID = ea.entryId and ea.AddressTypeID = 0
+INNER JOIN Country c on ea.CountryID = c.CountryID
 WHERE ne.strm = '1178' and ne.ACAD_LEVEL_BOT NOT IN('01','10')
 and CUM_GPA <> '0.00'
-group by e.entryId, CUM_GPA, ne.EmplID, ge.Abbreviation,ep.ProfileWeightEnum, ea.CountryID,
-ea.Street, ea.City, ea.StateProvince, ea.ZipPostcode
+group by e.entryId, CUM_GPA, ne.EmplID, ge.Abbreviation,ep.ProfileWeightEnum, ea.City,ea.StateProvince, c.Description
 
 
 -- profile item 500 - bed time
