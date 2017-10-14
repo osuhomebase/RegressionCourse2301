@@ -4,3 +4,6 @@ inner join NYUAdmissionsImport na on ne.emplId = na.EmplID
 where ne.STRM = (select max(ne2.STRM) from nyuEnrollment ne2 where ne2.emplID = ne.EmplID) and na.Admit_Term = '1138' and na.Admit_Type = 'NFR' and cum_gpa <> 0
 group by ne.EmplID, CUM_GPA
 
+select ne.emplID, cum_GPA from nyuenrollment ne inner join NYUAdmissionsImport na on ne.EmplID = na.EmplID
+where ne.STRM = (select max(ne2.STRM) from nyuEnrollment ne2 where ne2.emplID = ne.EmplID) and na.Admit_Term = '1138' and na.Admit_Type = 'NFR' and cum_gpa <> 0
+and ne.emplID NOT IN (select emplID from nyu.item_sf)
